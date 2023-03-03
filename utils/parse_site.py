@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 import asyncio
 import aiohttp
 from utils import save_last_news
+from utils.config import LAST_NEWS_PATH
 
 
 async def get_site_page(link):
@@ -72,14 +73,16 @@ async def get_news():
 
 	dict_news = await get_dict_news(source_link, news_link)
 
-	rw_json = save_last_news.ReadWriteJson("data/last_news.json")
+	rw_json = save_last_news.ReadWriteJson(LAST_NEWS_PATH)
 	await rw_json.start()
 
 	try:
 		last_news = await rw_json.read()
-
 		if last_news != dict_news:
 			return dict_news
+
+	except FileNotFoundError:
+		return dict_news
 
 	except Exception as e:
 		print(f"\nERROR: {e}\n")
@@ -87,46 +90,3 @@ async def get_news():
 	finally:
 		await rw_json.write(dict_news)
 		await rw_json.stop()
-
-
-
-
-
-# import os
-# import sqlite3
-# def get_list_users():
-# 	conn = sqlite3.connect('data.db')
-# 	conn.row_factory = lambda cursor, row: row[0]
-# 	cur = conn.cursor()
-# 	cur.execute(f'SELECT * FROM users')
-# 	result = cur.fetchall()
-	
-# 	conn.close()
-# 	return result
-
-
-
-# if __name__ == "__main__":
-# 	if not os.path.exists("data.db"):
-# 		conn = sqlite3.connect('data.db')
-# 		cur = conn.cursor()
-# 		cur.execute('CREATE TABLE users(user_id INTEGER, username TEXT)')
-# 		conn.close()
-
-# 	list_users = get_list_users()
-# 	print(list_users)
-# 	if not 749333822 in list_users:
-
-# 		try:
-# 			conn = sqlite3.connect('data.db')
-# 			cur = conn.cursor()
-# 			cur.execute(f'INSERT INTO users VALUES("{749333822}", "@{"andyrei"}")')
-# 			conn.commit()
-# 			conn.close()
-# 		except Exception as e:
-# 			print(e)
-# 			conn = sqlite3.connect('data.db')
-# 			cur = conn.cursor()
-# 			cur.execute(f'INSERT INTO users VALUES("{message.from_user.id}")')
-# 			conn.commit()
-# 			conn.close()

@@ -17,7 +17,9 @@ if TELEGRAM_TOKEN is None:
 
 if not os.path.exists('data'): os.mkdir('data')
 
-USER_DATABASE_NAME = "data.db"
-USER_DATABASE_URL = f"data/{USER_DATABASE_NAME}"
+USER_DATABASE_NAME = "users_data.db"
+USER_DATABASE_PATH = f"data/{USER_DATABASE_NAME}"
+LAST_NEWS_NAME = "last_news.json"
+LAST_NEWS_PATH = f"data/{LAST_NEWS_NAME}"
 
 DEBUG = True

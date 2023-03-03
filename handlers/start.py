@@ -25,7 +25,7 @@ async def start(message: types.Message, state: FSMContext):
 
 
 async def add_user(message):
-	db = UserDatabase(config.USER_DATABASE_URL)
+	db = UserDatabase(config.USER_DATABASE_PATH)
 	await db.connect()
 
 	# Add a user

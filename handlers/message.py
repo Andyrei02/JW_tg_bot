@@ -31,7 +31,7 @@ async def send_post(dict_news):
 	intro = dict_news["intro"]
 	caption = f"<b>{title}</b>\n{intro}...\n<a href='{link}'>open article</a>"
 	
-	db = UserDatabase(config.USER_DATABASE_URL)
+	db = UserDatabase(config.USER_DATABASE_PATH)
 	await db.connect()
 
 	users = await db.get_all_users()
