@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO)
 
 async def scheduler(dp):
 	try:
-		aioschedule.every(2).seconds.do(handlers.message.parse_news, dp)
+		aioschedule.every().day.at("5:00").do(handlers.message.parse_news, dp)
 		while True:
 			await aioschedule.run_pending()
 			await asyncio.sleep(1)
