@@ -16,7 +16,10 @@ from utils.users_database import UserDatabase
 @dp.message_handler(CommandStart())
 async def start(message: types.Message, state: FSMContext):
 	# Send a welcome message to the user
-	await message.answer("Hello! I'm your bot. How can I help you?")
+	await message.answer("Bine ați venit la JW_news!\
+						 Acest bot vă oferă cele mai recente actualizări de știri de la jw.org în fiecare zi, la ora 5:00 AM.\
+						 Dacă întâmpinați probleme sau aveți sugestii, vă rugăm să nu ezitați să ne trimiteți un mesaj la @andyrei. Căutăm mereu să îmbunătățim botul nostru și salutăm feedback-ul tău.\
+						 Vă mulțumim că folosiți botul nostru!")
 
 	await add_user(message)
 
