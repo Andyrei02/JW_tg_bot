@@ -6,4 +6,5 @@
 
 from . import start
 from . import help
+from . import news
 from . import message
