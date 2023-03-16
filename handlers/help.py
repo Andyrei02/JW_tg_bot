@@ -18,5 +18,7 @@ async def help(message: types.Message):
 						 "/start - Porniți botul\n"
 						 "/help - Afișează acest mesaj de ajutor\n"
 						 "/list_news - Afișează o listă a ultimelor știri"
+						 "/daily_news - Afișează o știre pe ziua de azi"
+						 "/daily_text - Afișează textul zilei de azi"
 						 "\n"
 						 "Dacă aveți întrebări sau întâmpinați probleme, vă rugăm să nu ezitați să ne trimiteți un mesaj la @andyrei. Vă mulțumim că ați folosit botul nostru!")
