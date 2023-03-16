@@ -12,6 +12,9 @@ from aiogram import executor
 
 from utils.loader import bot, dp
 import handlers
+from utils.update_data import update_data
+from handlers.daily_news import public_daily_news
+from handlers.daily_text import public_daily_text
 
 
 logging.basicConfig(level=logging.INFO)
@@ -19,7 +22,9 @@ logging.basicConfig(level=logging.INFO)
 
 async def scheduler(dp):
 	try:
-		aioschedule.every().day.at("5:00").do(handlers.message.parse_news, dp)
+		aioschedule.every().day.at("4:40").do(update_data)
+		aioschedule.every().day.at("5:00").do(public_daily_news)
+		aioschedule.every().day.at("6:00").do(public_daily_text)
 		while True:
 			await aioschedule.run_pending()
 			await asyncio.sleep(1)
@@ -29,6 +34,7 @@ async def scheduler(dp):
 
 async def on_startup(dispatcher):
 	asyncio.create_task(scheduler(dispatcher))
+	await update_data()
 
 
 if __name__ == '__main__':

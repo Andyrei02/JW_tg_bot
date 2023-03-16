@@ -18,7 +18,7 @@ class ReadWriteJson:
 				data = await self.queue.get()
 				if data is None:
 					break
-				json.dump(data, f)
+				json.dump(data, f, indent=4)
 				f.write('\n')
 				f.flush()
 

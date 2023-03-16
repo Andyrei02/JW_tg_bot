@@ -21,5 +21,7 @@ USER_DATABASE_NAME = "users_data.db"
 USER_DATABASE_PATH = f"data/{USER_DATABASE_NAME}"
 LAST_NEWS_NAME = "last_news.json"
 LAST_NEWS_PATH = f"data/{LAST_NEWS_NAME}"
+DAILY_TEXT_NAME = "daily_text.json"
+DAILY_TEXT_PATH = f"data/{DAILY_TEXT_NAME}"
 
 DEBUG = True
