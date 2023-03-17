@@ -17,7 +17,7 @@ from utils.users_database import UserDatabase
 async def start(message: types.Message, state: FSMContext):
 	# Send a welcome message to the user
 	await message.answer("Bine ați venit la JW_news!"
-						 "Acest bot vă oferă cele mai recente actualizări de știri de la jw.org în fiecare zi, la ora 5:00 AM."
+						 "Acest bot vă oferă cele mai recente actualizări de știri de la jw.org în fiecare zi, la ora 7:00 AM, și textul zilei la ora 8:00"
 						 "Dacă întâmpinați probleme sau aveți sugestii, vă rugăm să nu ezitați să ne trimiteți un mesaj la @andyrei. Căutăm mereu să îmbunătățim botul nostru și salutăm feedback-ul tău."
 						 "Vă mulțumim că folosiți botul nostru!")
 
