@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+ADMIN_ID = os.getenv('ADMIN_ID')
 
 if TELEGRAM_TOKEN is None:
 	raise ValueError("Telegram API token not found in environment variables")

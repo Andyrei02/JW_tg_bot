@@ -4,6 +4,7 @@
 # This code is licensed under the MIT License.
 # See LICENSE for details.
 
+# daily_news.py
 from aiogram import types
 from aiogram.dispatcher.filters import Command
 import datetime
@@ -12,7 +13,6 @@ from utils.users_database import UserDatabase
 from utils.loader import dp
 from utils.read_write_json import ReadWriteJson
 from utils.config import LAST_NEWS_PATH, USER_DATABASE_PATH
-
 
 async def get_daily_news(path):
 	rw_json = ReadWriteJson(path)
@@ -27,6 +27,7 @@ async def handler_public_daily_news(message: types.Message):
 
 	if dict_news:
 		await send_post(dict_news)
+	await message.delete()
 
 
 async def public_daily_news():
@@ -41,6 +42,7 @@ async def send_post(dict_news):
 	link = dict_news["url"]
 	intro = dict_news["intro"]
 	caption = f"<b>{title}</b>\n{intro}...\n<a href='{link}'>citește articolul</a>"
+	
 	
 	db = UserDatabase(USER_DATABASE_PATH)
 	await db.connect()

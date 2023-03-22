@@ -25,7 +25,7 @@ async def get_daily_text(path):
 async def handler_public_daily_text(message: types.Message):
 	dict_text = await get_daily_text(DAILY_TEXT_PATH)
 
-	photo_verses = open("data/verses_img.jpg", "rb")
+	photo_verses = open("media/verses_img.jpg", "rb")
 
 	text = f"""
 	<b>{dict_text["title"]}</b>
@@ -34,6 +34,8 @@ async def handler_public_daily_text(message: types.Message):
 
 	await dp.bot.send_photo(message.chat.id, caption=text, photo=photo_verses, parse_mode="HTML")
 	await message.answer(dict_text["body"], parse_mode="HTML")
+
+	await message.delete()
 
 
 async def public_daily_text():
