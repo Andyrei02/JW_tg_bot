@@ -34,7 +34,7 @@ async def scheduler(dp):
 
 async def on_startup(dispatcher):
 	asyncio.create_task(scheduler(dispatcher))
-	#await update_data()
+	await update_data()
 
 
 if __name__ == '__main__':
