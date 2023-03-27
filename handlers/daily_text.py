@@ -41,7 +41,8 @@ async def handler_public_daily_text(message: types.Message):
 async def public_daily_text():
 	dict_text = await get_daily_text(DAILY_TEXT_PATH)
 
-	photo_verses = open("media/verses_img.jpg", "rb")
+	with open("media/verses_img.jpg", "rb") as f:
+            photo_verses = f
 
 	text = f"""
 	<b>{dict_text["title"]}</b>
