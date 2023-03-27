@@ -25,7 +25,9 @@ async def get_daily_text(path):
 async def handler_public_daily_text(message: types.Message):
 	dict_text = await get_daily_text(DAILY_TEXT_PATH)
 
-	photo_verses = open("media/verses_img.jpg", "rb")
+	async with aiofiles.open("media/verses_img.jpg", "rb") as f:
+		photo_verses = await f.read()
+
 
 	text = f"""
 	<b>{dict_text["title"]}</b>
@@ -41,8 +43,9 @@ async def handler_public_daily_text(message: types.Message):
 async def public_daily_text():
 	dict_text = await get_daily_text(DAILY_TEXT_PATH)
 
-	with open("media/verses_img.jpg", "rb") as f:
-            photo_verses = f
+	async with aiofiles.open("media/verses_img.jpg", "rb") as f:
+		photo_verses = await f.read()
+
 
 	text = f"""
 	<b>{dict_text["title"]}</b>
