@@ -7,6 +7,7 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Command
 import datetime
+import aiofiles
 
 from utils.loader import dp
 from utils.read_write_json import ReadWriteJson
