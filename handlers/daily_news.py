@@ -37,7 +37,7 @@ async def public_daily_news():
 		await send_post(dict_news)
 
 
-async def send_post(dict_news, user=user):
+async def send_post(dict_news, user=None):
 	title = dict_news["title"]
 	link = dict_news["url"]
 	intro = dict_news["intro"]
