@@ -26,7 +26,7 @@ async def handler_public_daily_news(message: types.Message):
 	dict_news = await get_daily_news(LAST_NEWS_PATH)
 
 	if dict_news:
-		await send_post(dict_news)
+		await send_post(dict_news, user=message.chat.id)
 	await message.delete()
 
 
@@ -37,19 +37,21 @@ async def public_daily_news():
 		await send_post(dict_news)
 
 
-async def send_post(dict_news):
+async def send_post(dict_news, user=user):
 	title = dict_news["title"]
 	link = dict_news["url"]
 	intro = dict_news["intro"]
 	caption = f"<b>{title}</b>\n{intro}...\n<a href='{link}'>citește articolul</a>"
 	
-	
-	db = UserDatabase(USER_DATABASE_PATH)
-	await db.connect()
+	if user:
+		await dp.bot.send_photo(user, caption=caption, photo=link, parse_mode="HTML")
+	else:
+		db = UserDatabase(USER_DATABASE_PATH)
+		await db.connect()
 
-	users = await db.get_all_users()
-	if users:
-		for user in users:
-			await dp.bot.send_photo(user['chat_id'], caption=caption, photo=link, parse_mode="HTML")
+		users = await db.get_all_users()
+		if users:
+			for user in users:
+				await dp.bot.send_photo(user['chat_id'], caption=caption, photo=link, parse_mode="HTML")
 
-	await db.close()
+		await db.close()
