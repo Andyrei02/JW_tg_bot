@@ -27,7 +27,6 @@ async def handler_public_daily_news(message: types.Message):
 
 	if dict_news:
 		await send_post(dict_news, user=message.chat.id)
-	await message.delete()
 
 
 async def public_daily_news():
