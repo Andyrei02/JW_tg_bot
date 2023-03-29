@@ -8,8 +8,6 @@ from aiogram import types
 from aiogram.dispatcher.filters import Command
 
 from utils.loader import dp
-from utils.users_database import UserDatabase
-from utils import config
 
 from utils import update_data
 
@@ -28,5 +26,3 @@ async def update(message: types.Message):
 	# message 3
 	with open("media/complete.png", "rb") as photo:
 		await dp.bot.send_photo(message.chat.id, caption="Datele au fost actualizate", photo=photo)
-
-	await message.delete()

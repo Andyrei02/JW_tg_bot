@@ -6,13 +6,11 @@
 
 from aiogram import types
 from aiogram.dispatcher.filters import Command
-import datetime
 import aiofiles
 
-from utils.loader import dp
+from utils.loader import dp, db
 from utils.read_write_json import ReadWriteJson
-from utils.config import DAILY_TEXT_PATH, USER_DATABASE_PATH
-from utils.users_database import UserDatabase
+from utils.config import DAILY_TEXT_PATH
 
 
 async def get_daily_text(path):
@@ -53,7 +51,6 @@ async def public_daily_text():
 	<b>{dict_text["verse"]}</b>
 			"""
 
-	db = UserDatabase(USER_DATABASE_PATH)
 	await db.connect()
 
 	users = await db.get_all_users()

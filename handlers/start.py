@@ -7,9 +7,7 @@
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 
-from utils.loader import dp
-from utils import config
-from utils.users_database import UserDatabase
+from utils.loader import dp, db
 from handlers.keyboard import daily_news_keyboard
 
 
@@ -28,15 +26,11 @@ async def start(message: types.Message):
 
 
 async def add_user(message):
-	db = UserDatabase(config.USER_DATABASE_PATH)
 	await db.connect()
 
 	# Add a user
-	user = (message.from_user.id, message.from_user.first_name, message.from_user.last_name, message.from_user.username) #types.User(id=1234567890, first_name='John', last_name='Doe', username='johndoe')
+	user = (message.from_user.id, message.from_user.first_name, message.from_user.last_name, message.from_user.username)
 	await db.add_user(user)
-
-	# Retrieve all users
-	users = await db.get_all_users()
 
 	# Close the database connection
 	await db.close()

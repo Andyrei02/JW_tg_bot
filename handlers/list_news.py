@@ -6,7 +6,6 @@
 
 from aiogram import types
 from aiogram.dispatcher.filters import Command
-import datetime
 
 from utils.loader import dp
 from utils.parser import ListNewsScraper
@@ -17,8 +16,8 @@ async def public_list_news(message: types.Message):
 	scraper = ListNewsScraper("https://www.jw.org/ro/stiri/jw/rss/NewsSubsectionRSSFeed/feed.xml")
 	news_list = await scraper.scrape()
 
-	await message.answer("Lista Știrilor:")
+	await message.answer("Ultimele 10 știri:")
 
-	for news in news_list:
+	for news in news_list[:10]:
 		text = f"<b>{news['title']}</b>\nData publicarii: {news['date']}\n<a href='{news['link']}'>🔗citește articolul</a>"
 		await dp.bot.send_photo(message.chat.id, caption=text, photo=news['link'], parse_mode="HTML")

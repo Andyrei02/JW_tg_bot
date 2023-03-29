@@ -7,8 +7,6 @@
 from aiogram import types
 
 from utils.loader import dp
-from utils.users_database import UserDatabase
-from utils import config
 
 
 @dp.message_handler(state=None)

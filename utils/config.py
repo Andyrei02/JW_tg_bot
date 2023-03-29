@@ -18,11 +18,23 @@ if TELEGRAM_TOKEN is None:
 
 if not os.path.exists('data'): os.mkdir('data')
 
-USER_DATABASE_NAME = "users_data.db"
-USER_DATABASE_PATH = f"data/{USER_DATABASE_NAME}"
 LAST_NEWS_NAME = "last_news.json"
 LAST_NEWS_PATH = f"data/{LAST_NEWS_NAME}"
 DAILY_TEXT_NAME = "daily_text.json"
 DAILY_TEXT_PATH = f"data/{DAILY_TEXT_NAME}"
+
+db_host = os.getenv('MYSQLHOST')
+db_port = os.getenv('MYSQLPORT')
+db_database = os.getenv('MYSQLDATABASE')
+db_username = os.getenv('MYSQLUSER')
+db_password = os.getenv('MYSQLPASSWORD')
+
+db_config = {
+	'user': db_username,
+	'password': db_password,
+	'host': db_host,
+	'port': db_port,
+	'database': db_database
+}
 
 DEBUG = True
