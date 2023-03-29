@@ -18,7 +18,7 @@ class UserDatabase:
 		self.connection = mysql.connector.connect(**self.db_config)
 		self.cursor = self.connection.cursor()
 		self.cursor.execute('''CREATE TABLE IF NOT EXISTS users (
-			chat_id INT PRIMARY KEY,
+			chat_id BIGINT PRIMARY KEY,
 			first_name VARCHAR(255),
 			last_name VARCHAR(255),
 			username VARCHAR(255)
