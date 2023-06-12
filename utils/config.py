@@ -27,11 +27,11 @@ RECOMMENDATION_PATH = f"data/{RECOMMENDATION_NAME}"
 LIST_NEWS_NAME = "list_news.json"
 LIST_NEWS_PATH = f"data/{LIST_NEWS_NAME}"
 
-db_host = os.getenv('MYSQLHOST')
-db_port = os.getenv('MYSQLPORT')
-db_database = os.getenv('MYSQLDATABASE')
-db_username = os.getenv('MYSQLUSER')
-db_password = os.getenv('MYSQLPASSWORD')
+db_host = os.getenv('PGHOST')
+db_port = os.getenv('PGPORT')
+db_database = os.getenv('PGDATABASE')
+db_username = os.getenv('PGUSER')
+db_password = os.getenv('PGPASSWORD')
 
 db_config = {
 	'user': db_username,
