@@ -4,20 +4,24 @@
 # This code is licensed under the MIT License.
 # See LICENSE for details.
 
-from aiogram import types
-from aiogram.dispatcher.filters import Command
 
 from utils.loader import dp
-from utils.parser import ListNewsScraper
+from utils.read_write_json import ReadWriteJson
+from utils.config import LIST_NEWS_PATH
 
 
-@dp.message_handler(Command("list_news"))
-async def public_list_news(message: types.Message):
-	scraper = ListNewsScraper("https://www.jw.org/ro/stiri/jw/rss/NewsSubsectionRSSFeed/feed.xml")
-	news_list = await scraper.scrape()
+async def get_recommendation(path):
+	rw_json = ReadWriteJson(path)
 
-	await message.answer("Ultimele 10 știri:")
+	return await rw_json.read()
 
-	for news in news_list[:10]:
-		text = f"<b>{news['title']}</b>\nData publicarii: {news['date']}\n<a href='{news['link']}'>🔗citește articolul</a>"
-		await dp.bot.send_photo(message.chat.id, caption=text, photo=news['link'], parse_mode="HTML")
+
+async def public_list_news(message):
+	dict_news_list = await get_recommendation(LIST_NEWS_PATH)
+
+	await message.answer("O listă din ultimele știri:")
+
+	if dict_news_list:
+		for index in dict_news_list:
+			text = f"<b>{dict_news_list[index]['title']}</b>\nData publicarii: {dict_news_list[index]['date']}\n<a href='{dict_news_list[index]['link']}'>🔗citește articolul</a>"
+			await dp.bot.send_photo(message.chat.id, caption=text, photo=dict_news_list[index]['link'], parse_mode="HTML")

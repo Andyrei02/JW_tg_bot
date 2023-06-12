@@ -22,6 +22,10 @@ LAST_NEWS_NAME = "last_news.json"
 LAST_NEWS_PATH = f"data/{LAST_NEWS_NAME}"
 DAILY_TEXT_NAME = "daily_text.json"
 DAILY_TEXT_PATH = f"data/{DAILY_TEXT_NAME}"
+RECOMMENDATION_NAME = "recommendation.json"
+RECOMMENDATION_PATH = f"data/{RECOMMENDATION_NAME}"
+LIST_NEWS_NAME = "list_news.json"
+LIST_NEWS_PATH = f"data/{LIST_NEWS_NAME}"
 
 db_host = os.getenv('MYSQLHOST')
 db_port = os.getenv('MYSQLPORT')

@@ -4,16 +4,12 @@
 # This code is licensed under the MIT License.
 # See LICENSE for details.
 
-from aiogram import types
-from aiogram.dispatcher.filters import Command
-
 from utils.loader import dp
 
 from utils import update_data
 
 
-@dp.message_handler(Command("update"))
-async def update(message: types.Message):
+async def update(message):
 
 	# message 2
 	with open('media/loading.gif', 'rb') as gif:

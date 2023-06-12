@@ -4,15 +4,10 @@
 # This code is licensed under the MIT License.
 # See LICENSE for details.
 
-from aiogram import types
-from aiogram.dispatcher.filters.builtin import CommandHelp
-
 from utils.loader import dp
 
 
-@dp.message_handler(CommandHelp())
-async def help(message: types.Message):
-	# Send a help message to the user
+async def help_msg(message):
 	await message.answer("Bun venit la botul JW_news! Iată comenzile disponibile:\n"
 						 "\n"
 						 "/start - Porniți botul\n"

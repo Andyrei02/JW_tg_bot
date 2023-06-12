@@ -4,10 +4,6 @@
 # This code is licensed under the MIT License.
 # See LICENSE for details.
 
-# daily_news.py
-from aiogram import types
-from aiogram.dispatcher.filters import Command
-
 from utils.loader import dp, db
 from utils.read_write_json import ReadWriteJson
 from utils.config import LAST_NEWS_PATH
@@ -20,19 +16,11 @@ async def get_daily_news(path):
 	return dict_daily_text
 
 
-@dp.message_handler(Command("daily_news"))
-async def handler_public_daily_news(message: types.Message):
+async def public_daily_news(chat_id=None):
 	dict_news = await get_daily_news(LAST_NEWS_PATH)
 
 	if dict_news:
-		await send_post(dict_news, user=message.chat.id)
-
-
-async def public_daily_news():
-	dict_news = await get_daily_news(LAST_NEWS_PATH)
-
-	if dict_news:
-		await send_post(dict_news)
+		await send_post(dict_news, chat_id)
 
 
 async def send_post(dict_news, user=None):

@@ -8,7 +8,7 @@ import asyncio
 import aiohttp
 import datetime
 import requests
-import urllib.request
+from urllib.request import urlopen
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 
@@ -69,32 +69,6 @@ class NewsScraper:
 		return await self.get_dict_news()
 
 
-class ListNewsScraper:
-	def __init__(self, url):
-		self.url = url
-
-	async def scrape(self):
-		xml_data = urllib.request.urlopen(self.url).read()
-		root = ET.fromstring(xml_data)
-		news_list = []
-		for item in root.iter("item"):
-			title = item.find("title").text
-			link = item.find("link").text
-			date_str = item.find("pubDate").text
-			romanian_date = await self._convert_date_to_romanian(date_str)
-			news_list.append({"title": title, "link": link, "date": romanian_date})
-		return news_list[::-1]
-
-	async def _convert_date_to_romanian(self, date_str):
-		date = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
-		months = [
-			'ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie',
-			'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'
-		]
-		romanian_date_str = f"{date.day} {months[date.month - 1]} {date.year}"
-		return romanian_date_str
-
-
 class DailyTextScraper:
 	def __init__(self, source_link, url):
 		self.source_link = source_link
@@ -139,3 +113,67 @@ class DailyTextScraper:
 		body = self.format_body(daily_text)
 
 		return {"title": title, "verse": verse, "body": body}
+
+
+class ListNewsScraper:
+	def __init__(self, url):
+		self.url = url
+
+	async def scrape(self):
+		xml_data = urlopen(self.url).read()
+		root = ET.fromstring(xml_data)
+		news_list = []
+		for item in root.iter("item"):
+			title = item.find("title").text
+			link = item.find("link").text
+			date_str = item.find("pubDate").text
+			romanian_date = await self._convert_date_to_romanian(date_str)
+			news_list.append({"title": title, "link": link, "date": romanian_date})
+		return news_list[::-1]
+
+	async def _convert_date_to_romanian(self, date_str):
+		date = datetime.datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
+		months = [
+			'ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie',
+			'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'
+		]
+		romanian_date_str = f"{date.day} {months[date.month - 1]} {date.year}"
+		return romanian_date_str
+
+
+class RecommendationScraper:
+	def __init__(self, source_url, url):
+		self.source_url = source_url
+		self.url = url
+
+	async def get_site_page(self):
+		async with aiohttp.ClientSession() as session:
+			async with session.get(self.url) as resp:
+				response =  await resp.text()
+		return BeautifulSoup(response, 'lxml')
+
+	async def scrape(self):
+		soup = await self.get_site_page()
+		content_block = soup.find("main", {"id": "content"})
+		container = content_block.find("div", {"class": "sectionSynopsis"})
+		content = container.find("div", {"class": "sect-syn-content"})
+		list_items = content.find_all("div", {"class": "synopsis"})
+		return list_items
+
+	async def extract_recommendation(self, item):
+		soup = item.find("div", {"class": "syn-body lss"})
+		body_title = soup.find("h3")
+		body_link = soup.find("a")["href"]
+		body_img = item.find("div", {"class": "syn-img lss"})
+		title = body_title.text.strip()
+		link = self.source_url + body_link
+		img = body_img.find("img")["src"]
+		return {"title": title, "link": link, "img": img}
+
+	async def get_recommendations(self):
+		list_items = await self.scrape()
+		recommendation_list = []
+		for item in reversed(list_items):
+			recommendation = await self.extract_recommendation(item)
+			recommendation_list.append(recommendation)
+		return recommendation_list

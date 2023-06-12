@@ -22,3 +22,4 @@ requests==2.28.2
 soupsieve==2.4
 urllib3==1.26.15
 yarl==1.8.2
+psycopg2-binary
