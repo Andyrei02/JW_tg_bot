@@ -9,7 +9,7 @@
 ## Instalation
 1. Clone the repository using _'git clone'_:
 ```bash
-git clone https://github.com/your-username/your-repository.git
+git clone https://github.com/Andyrei02/JW_tg_bot.git
 ```
 2. Navigate to the project directory:
 ```bash
